@@ -34,7 +34,6 @@ class LineChart extends Component {
       .range([margin.left, width - margin.right]);
 
     var yScale = d3.scaleLinear()
-      // d3.max(data, d => d.positive)
       .domain ([0, maxi]).nice()
       .range([height - margin.bottom, margin.top])
 
@@ -44,7 +43,7 @@ class LineChart extends Component {
       .tickFormat(d3.timeFormat('%m/%d'))
       .scale(xScale);
 
-    const yAxis = d3.axisLeft()
+    this.yAxis = d3.axisLeft()
       .ticks(10)
       .scale(yScale);
 
@@ -58,9 +57,10 @@ class LineChart extends Component {
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(xAxis);
 
-    this.svg.append("g")
-      .attr("transform", `translate(${margin.left},0)`)
-      .call(yAxis);
+    this.y_axis = this.svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(this.yAxis)
+
 
     this.chart = this.svg.append("g")
 
@@ -71,10 +71,9 @@ class LineChart extends Component {
       // let new_data = data.filter(function(d) {return d.date <
       console.log(selected)
       var index = data.date.findIndex(function(d) {return d.getDate() === threshold.getDate()});
-      var new_data = data.series.filter(d => {return selected.includes(d.name)})
-      console.log(new_data.length)
+      var tp_data = data.series.filter(d => {return selected.includes(d.name)})
 
-      new_data = new_data.map(d => { return {
+      var new_data = tp_data.map(d => { return {
         name: d.name,
         positive: d.positive.slice(0,index)
         }
@@ -84,7 +83,7 @@ class LineChart extends Component {
       var startDate = data.date[0],
           endDate = data.date[data.date.length-1];
 
-      var maxi = d3.max(data.series, s => d3.max(s.positive.map(
+      var maxi = d3.max(tp_data, s => d3.max(s.positive.map(
         function(d) {
               if (d !== "undefined") {return d}
               else { return -1}
@@ -98,6 +97,9 @@ class LineChart extends Component {
         .domain ([0, maxi]).nice()
         .range([height - margin.bottom, margin.top])
 
+      this.yAxis.scale(yScale);
+
+      this.y_axis.call(this.yAxis);
 
       var color = d3.scaleOrdinal(d3.schemeTableau10).domain(new_data.map(d => d.name));
 
