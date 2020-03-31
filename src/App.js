@@ -56,7 +56,7 @@ for(var i = 0; i < statesjson.date.length; i++){
                 <button type="button" onClick = {this.onClearClick}>Clear</button>
               </div>
             </div>
-            <a href='https://hattywang.github.io/covidInfo.github.io/multiView.html' class="previous">previous</a>
+            <a href='https://github.mit.edu/pages/6894-sp20/A4-How-does-Coronavirus-spread/multiView.html' class="previous">previous</a>
         </div>
         </div>
       )
