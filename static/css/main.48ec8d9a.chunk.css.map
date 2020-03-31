@@ -1,1 +1,0 @@
-{"version":3,"sources":["app.css"],"names":[],"mappings":"AAAA,YACE,YAAY,CACZ,kBACF","file":"main.48ec8d9a.chunk.css","sourcesContent":[".controldiv{\n  display:flex;\n  flex-direction:row;\n}\n"]}
